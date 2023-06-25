@@ -2,7 +2,7 @@ import Header from "./Header/Header.jsx";
 import Main from "./Main/Main.jsx";
 import Footer from "./Footer/Footer.jsx";
 import PopupWithForm from "./PopupWithForm/PopupWithForm.jsx";
-import PopupImage from "./PopupImage/PopupImage.jsx";
+import ImagePopup from "./ImagePopup/ImagePopup.jsx";
 import { useState } from "react";
 
 
@@ -11,7 +11,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
-  const [isPopupImage, setPopupImage] = useState(false)
+  const [isImagePopup, setImagePopup] = useState(false)
   const [selectedCard, setSelectedCard] = useState(false)
 
 
@@ -29,7 +29,7 @@ function App() {
  
   function handleCardClick(cardData) {
     setSelectedCard(cardData)
-    setPopupImage(true)
+    setImagePopup(true)
    
   }
 
@@ -37,7 +37,7 @@ function App() {
     setIsEditProfilePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
     setIsAddPlacePopupOpen(false)
-    setPopupImage(false)
+    setImagePopup(false)
 
   }
 
@@ -137,9 +137,9 @@ function App() {
       >
       </PopupWithForm>
 
-      <PopupImage
+      <ImagePopup
         cardData={selectedCard}
-        isOpen={isPopupImage}
+        isOpen={isImagePopup}
         onClose={closeAllPopups}
       />
     </div>
