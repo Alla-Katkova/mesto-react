@@ -3,7 +3,7 @@ export default function ImagePopup({ cardData, isOpen, onClose }) {
   return (
     <>
       {
-        cardData && 
+        cardData && // при selectedCard(null) ставим условие при отрисовке карты
         <section className={`popup popup-zoom ${isOpen && 'popup_opened'}`} >
           <div className="popup__container-zoom">
             <button

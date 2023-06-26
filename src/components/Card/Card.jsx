@@ -6,7 +6,7 @@ export default function Card({ cardData, onCardClick }) {
       <img className="element__photo"
         src={cardData.link}
         alt={`Фотография ${cardData.name}`}
-        onClick={() => onCardClick({ link: cardData.link, name: cardData.name })}
+        onClick={() => onCardClick(cardData)}
       />
       <button type="button" className="element__delete-button" />
       <div className="element__description">
