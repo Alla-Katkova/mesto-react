@@ -14,11 +14,14 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
     api
       .getDataForInitialPageRendering()
       .then(response => {
-       // console.log(response)
+        // console.log(response)
         setUserName(response[0].name)
         setUserDescription(response[0].about)
         setUserAvatar(response[0].avatar)
         setCards(response[1])
+      })
+      .catch((err) => {
+        console.log(err);
       })
   }, []
   )
@@ -62,7 +65,7 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
         {cards.map((card) => {
           return (
             <article className="element" key={card._id}>
-            <Card cardData={card} onCardClick={onCardClick}/>
+              <Card cardData={card} onCardClick={onCardClick} />
             </article>
           )
         }

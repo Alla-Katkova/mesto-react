@@ -26,11 +26,11 @@ function App() {
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true)
   }
- 
+
   function handleCardClick(cardData) {
     setSelectedCard(cardData)
     setIsImagePopup(true)
-   
+
   }
 
   function closeAllPopups() {
