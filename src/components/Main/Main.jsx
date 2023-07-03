@@ -3,7 +3,7 @@ import api from "../../utils/api.js"
 import Card from "../Card/Card.jsx"
 import editButtonSvg from "../../images/edit-button.svg"
 import addButtonSvg from "../../images/img-plus.svg"
-export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
+export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onDelete }) {
 
   const [userName, setUserName] = useState('')
   const [userDescription, setUserDescription] = useState('')
@@ -65,7 +65,7 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
         {cards.map((card) => {
           return (
             <article className="element" key={card._id}>
-              <Card cardData={card} onCardClick={onCardClick} />
+              <Card cardData={card} onCardClick={onCardClick} onDelete={onDelete} />
             </article>
           )
         }

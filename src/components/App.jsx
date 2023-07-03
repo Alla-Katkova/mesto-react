@@ -13,6 +13,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   //const [isImagePopup, setIsImagePopup] = useState(false)
   const [selectedCard, setSelectedCard] = useState(null)
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false)
 
 
   function handleEditProfileClick() {
@@ -28,9 +29,13 @@ function App() {
   }
 
   function handleCardClick(cardData) {
-    setSelectedCard(cardData)
+    setSelectedCard(cardData)  
     //setIsImagePopup(true)
+  }
 
+  function hundleDeletePopupClick () {
+    setIsDeletePopupOpen(true)
+    //setEventListenerForDocument()
   }
 
   function closeAllPopups() {
@@ -39,7 +44,7 @@ function App() {
     setIsAddPlacePopupOpen(false)
    // setIsImagePopup(false)
     setSelectedCard(null)
-
+    setIsDeletePopupOpen(false)
   }
 
   return (
@@ -51,6 +56,7 @@ function App() {
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
         onCardClick={handleCardClick}
+        onDelete={hundleDeletePopupClick}
       />
       <Footer />
 
@@ -135,6 +141,8 @@ function App() {
         name="popupConfirmationDelete"
         title="Вы уверены?"
         buttonTitle="Да"
+        isOpen={isDeletePopupOpen}
+        onClose={closeAllPopups}
       >
       </PopupWithForm>
 

@@ -1,4 +1,4 @@
-export default function Card({ cardData, onCardClick }) {
+export default function Card({ cardData, onCardClick, onDelete }) {
   return (
     <div>
       {/* <article className="element"> */}
@@ -8,7 +8,8 @@ export default function Card({ cardData, onCardClick }) {
         alt={`Фотография ${cardData.name}`}
         onClick={() => onCardClick(cardData)}
       />
-      <button type="button" className="element__delete-button" />
+      {/* {cardData.myid === cardData.owner._id && <button type="button" className="element__delete-button" onClick={onDelete}/>} условие для урны на мои фото*/ }
+      <button type="button" className="element__delete-button" onClick={onDelete}/>
       <div className="element__description">
         {/*  <pre>{JSON.stringify(cardData, null, 2)}</pre> */}
         <h2 className="element__caption">{cardData.name}</h2>
