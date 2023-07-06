@@ -24,14 +24,13 @@ export default function Card({ cardData, onCardClick, onDelete, onCardLike }) {
         onClick={() => onCardClick(cardData)}
       />
       {/* //условие для урны на мои фото */}
-      {currentUser._id === cardData.owner._id && <button type="button" className="element__delete-button" onClick={onDelete} />}
-      {/* <button type="button" className="element__delete-button" onClick={onDelete}/> */}
+      {currentUser._id === cardData.owner._id && <button type="button" className="element__delete-button" onClick={() => onDelete(cardData._id)} />}
       <div className="element__description">
         {/*  <pre>{JSON.stringify(cardData, null, 2)}</pre> */}
         <h2 className="element__caption">{cardData.name}</h2>
         <div className="element__like-container">
 
-          <button type="button" className={`element__like-button ${isLiked(cardData, currentUser) ? 'element__like-button_active':''}`} onClick={handleLikeClick} /> 
+          <button type="button" className={`element__like-button ${isLiked(cardData, currentUser) ? 'element__like-button_active' : ''}`} onClick={handleLikeClick} />
           <span className="element__counter">{cardData.likes.length}</span>
         </div>
       </div>

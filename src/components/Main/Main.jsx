@@ -1,35 +1,57 @@
-import { useContext } from "react"
-//import api from "../../utils/api.js"
+import { useContext, useEffect, useState } from "react"
+import api from "../../utils/api.js"
 import Card from "../Card/Card.jsx"
 import editButtonSvg from "../../images/edit-button.svg"
 import addButtonSvg from "../../images/img-plus.svg"
 import CurrentUserContext from "../../context/CurrentUserContext.js"
+import { isLiked } from "../../utils/utils.js"
 
 
-
-export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onDelete, cards, onCardLike }) {
+export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onDelete }) {
   const currentUser = useContext(CurrentUserContext)
 
   // const [userName, setUserName] = useState('') // вводим usecontext и заменяем в return наши имя, статус и авватар
   // const [userDescription, setUserDescription] = useState('')
   // const [userAvatar, setUserAvatar] = useState('')
-  // const [cards, setCards] = useState([]) // перенесем в app
+  const [cards, setCards] = useState([])
 
-  // useEffect(() => {
-  //   api
-  //     .getDataForInitialPageRendering()
-  //     .then(response => {
-  //       // console.log(response)
-  //       setUserName(response[0].name)
-  //       setUserDescription(response[0].about)
-  //       setUserAvatar(response[0].avatar)
-  //       setCards(response[1])
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  // }, []
-  // ) // перенесем в апп
+  // api для карточек
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then(response => {
+        // console.log(response)
+        // setUserName(response[0].name)
+        // setUserDescription(response[0].about)
+        // setUserAvatar(response[0].avatar)
+        setCards(response)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, []
+  )
+
+  function handleCardLike(card) {
+    if (isLiked(card, currentUser)) {
+      api.putDislike(card._id)
+        .then(newCard => {
+          //console.log(response)
+          const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+          // Обновляем стейт
+          setCards(newCards);
+        })
+        .catch((error) => console.error(`Ошибка при снятии лайка ${error}`))
+    } else {
+      api.putLike(card._id)
+        .then(newCard => {
+          const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+          // Обновляем стейт
+          setCards(newCards);
+        })
+        .catch((error) => console.error(`Ошибка при добалении лайка ${error}`))
+    }
+  }
 
   return (
     <main className="content">
@@ -70,7 +92,7 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
         {cards.map((card) => {
           return (
             <article className="element" key={card._id}>
-              <Card cardData={card} onCardClick={onCardClick} onDelete={onDelete} onCardLike={onCardLike}/>
+              <Card cardData={card} onCardClick={onCardClick} onDelete={onDelete} onCardLike={handleCardLike} />
             </article>
           )
         }
