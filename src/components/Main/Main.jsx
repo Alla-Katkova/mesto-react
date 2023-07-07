@@ -7,13 +7,15 @@ import CurrentUserContext from "../../context/CurrentUserContext.js"
 import { isLiked } from "../../utils/utils.js"
 
 
-export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onDelete }) {
+export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
   const currentUser = useContext(CurrentUserContext)
 
   // const [userName, setUserName] = useState('') // вводим usecontext и заменяем в return наши имя, статус и авватар
   // const [userDescription, setUserDescription] = useState('')
   // const [userAvatar, setUserAvatar] = useState('')
   const [cards, setCards] = useState([])
+  // // стейт для удаления
+  // const [deleteCardId, setDeleteCardId] = useState('')
 
   // api для карточек
   useEffect(() => {
@@ -52,6 +54,24 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
         .catch((error) => console.error(`Ошибка при добалении лайка ${error}`))
     }
   }
+
+  // По аналогии с предыдущим пунктом добавьте функцию `handleCardDelete` в `Main`,
+  //  а также пропс `onCardDelete` и обработчик `handleDeleteClick` в `Card`.
+
+  // После запроса в API, обновите стейт `cards` с помощью метода `filter`: создайте копию массива, 
+  // исключив из него удалённую карточку.
+
+  function handleCardDelete(card) {
+    api.deleteCardFromDB(card._id)
+      .then(newCard => {
+        const newCards = cards.filter((c) => c._id !== card._id && c)
+        // Обновляем стейт
+        setCards(newCards);
+      })
+
+      .catch((error) => console.error(`Ошибка при удалении карточки ${error}`))
+  }
+
 
   return (
     <main className="content">
@@ -92,7 +112,7 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
         {cards.map((card) => {
           return (
             <article className="element" key={card._id}>
-              <Card cardData={card} onCardClick={onCardClick} onDelete={onDelete} onCardLike={handleCardLike} />
+              <Card cardData={card} onCardClick={onCardClick} onCardDelete={handleCardDelete} onCardLike={handleCardLike} />
             </article>
           )
         }

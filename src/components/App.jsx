@@ -20,8 +20,8 @@ function App() {
   // стейты для context
   const [currentUser, setCurrentUser] = useState({})
 
-  // стейт для удаления
-  const [deleteCardId, setDeleteCardId] = useState('')
+  // // стейт для удаления
+  // const [deleteCardId, setDeleteCardId] = useState('')
 
 
   const setAllaStatesForClosePopups = useCallback(() => {
@@ -70,11 +70,12 @@ function App() {
     setEventListenerForDocument()
   }
 
-  function handleDeleteClick(cardId) {
-    setDeleteCardId(cardId)
-    setIsDeletePopupOpen(true)
-    setEventListenerForDocument()
-  }
+  // function handleDeleteClick(cardId) {
+  //   setDeleteCardId(cardId)
+  //   setIsDeletePopupOpen(true)
+  //   setEventListenerForDocument()
+  // }
+
 
   // function closeAllPopupsByOverlayAndButton(event) {
   //   if (event.target === event.currentTarget) {
@@ -101,7 +102,14 @@ function App() {
   }, []
   )
 
-
+  // function handleDeleteSubmitButtonInPopup(event) {
+  //   event.preventDefault()
+  //   api.deleteCardFromDB(deleteCardId)
+  //   .then(response => {
+  //     closeAllPopups()
+  //   })
+  //   .catch((error) => console.error(`Ошибка при удалении карточки ${error}`))
+  // }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -113,7 +121,7 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
-          onDelete={handleDeleteClick}
+         // onDelete={handleDeleteClick}
 
 
         />
@@ -202,6 +210,7 @@ function App() {
           buttonTitle="Да"
           isOpen={isDeletePopupOpen}
           onClose={closeAllPopups}
+          //onSubmit={handleDeleteSubmitButtonInPopup}
         >
         </PopupWithForm>
 

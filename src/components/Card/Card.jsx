@@ -3,7 +3,7 @@ import CurrentUserContext from "../../context/CurrentUserContext"
 import { isLiked } from "../../utils/utils"
 
 
-export default function Card({ cardData, onCardClick, onDelete, onCardLike }) {
+export default function Card({ cardData, onCardClick, onCardDelete, onCardLike }) {
   const currentUser = useContext(CurrentUserContext)
 
   // Также добавьте в Card обработчик клика handleLikeClick и вызовите из него 
@@ -12,7 +12,9 @@ export default function Card({ cardData, onCardClick, onDelete, onCardLike }) {
   function handleLikeClick() {
     onCardLike(cardData)
   }
-
+  function handleDeleteClick() {
+    onCardDelete(cardData)
+  }
 
   return (
     <div>
@@ -24,7 +26,7 @@ export default function Card({ cardData, onCardClick, onDelete, onCardLike }) {
         onClick={() => onCardClick(cardData)}
       />
       {/* //условие для урны на мои фото */}
-      {currentUser._id === cardData.owner._id && <button type="button" className="element__delete-button" onClick={() => onDelete(cardData._id)} />}
+      {currentUser._id === cardData.owner._id && <button type="button" className="element__delete-button" onClick={handleDeleteClick} />}
       <div className="element__description">
         {/*  <pre>{JSON.stringify(cardData, null, 2)}</pre> */}
         <h2 className="element__caption">{cardData.name}</h2>
