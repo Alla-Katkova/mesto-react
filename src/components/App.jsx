@@ -31,7 +31,7 @@ function App() {
     setIsDeletePopupOpen(false)
   }
 
-//доработать, чтобы работало по esc
+  //доработать, чтобы работало по esc
   // const setAllaStatesForClosePopups = useCallback(() => {
   //   setIsEditProfilePopupOpen(false)
   //   setIsEditAvatarPopupOpen(false)
@@ -69,7 +69,7 @@ function App() {
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true)
-   // setEventListenerForDocument()
+    // setEventListenerForDocument()
   }
 
   function handleCardClick(cardData) {
@@ -110,6 +110,16 @@ function App() {
   }, []
   )
 
+  function handleUpdateUser(dataUser) {
+   //console.log(profilename, profilestatus)
+    api.editUserInfoInDb(dataUser.profilename, dataUser.profilestatus)
+      .then(response => {
+        setCurrentUser(response)
+        closeAllPopups()
+      })
+      .catch((error) => console.error(`Ошибка при редактировании профиля ${error}`))
+  }
+
   // function handleDeleteSubmitButtonInPopup(event) {
   //   event.preventDefault()
   //   api.deleteCardFromDB(deleteCardId)
@@ -138,6 +148,7 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
         />
 
         <PopupWithForm
