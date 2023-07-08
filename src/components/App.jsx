@@ -3,9 +3,11 @@ import Main from "./Main/Main.jsx";
 import Footer from "./Footer/Footer.jsx";
 import PopupWithForm from "./PopupWithForm/PopupWithForm.jsx";
 import ImagePopup from "./ImagePopup/ImagePopup.jsx";
-import { useCallback, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import CurrentUserContext from '../context/CurrentUserContext.js'
 import api from '../utils/api.js'
+import EditProfilePopup from "./EditProfilePopup/EditProfilePopup.jsx";
+
 
 
 function App() {
@@ -20,54 +22,60 @@ function App() {
   // стейты для context
   const [currentUser, setCurrentUser] = useState({})
 
-  // // стейт для удаления
-  // const [deleteCardId, setDeleteCardId] = useState('')
-
-
-  const setAllaStatesForClosePopups = useCallback(() => {
+  function closeAllPopups() {
     setIsEditProfilePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
     setIsAddPlacePopupOpen(false)
     // setIsImagePopup(false)
     setSelectedCard(null)
     setIsDeletePopupOpen(false)
-  }, [])
-
-  const closePopupByEsc = useCallback((event) => {
-    if (event.key === 'Escape') {
-      setAllaStatesForClosePopups()
-      document.removeEventListener('keydown', closePopupByEsc)
-    }
-  }, [setAllaStatesForClosePopups])
-
-  const closeAllPopups = useCallback(() => {
-    setAllaStatesForClosePopups()
-    document.removeEventListener('keydown', closePopupByEsc)
-  }, [setAllaStatesForClosePopups, closePopupByEsc])
-
-  function setEventListenerForDocument() {
-    document.removeEventListener('keydown', closePopupByEsc)
   }
+
+//доработать, чтобы работало по esc
+  // const setAllaStatesForClosePopups = useCallback(() => {
+  //   setIsEditProfilePopupOpen(false)
+  //   setIsEditAvatarPopupOpen(false)
+  //   setIsAddPlacePopupOpen(false)
+  //   // setIsImagePopup(false)
+  //   setSelectedCard(null)
+  //   setIsDeletePopupOpen(false)
+  // }, [])
+
+  // const closePopupByEsc = useCallback((event) => {
+  //   if (event.key === 'Escape') {
+  //     setAllaStatesForClosePopups()
+  //     document.removeEventListener('keydown', closePopupByEsc)
+  //   }
+  // }, [setAllaStatesForClosePopups])
+
+  // const closeAllPopups = useCallback(() => {
+  //   setAllaStatesForClosePopups()
+  //   document.removeEventListener('keydown', closePopupByEsc)
+  // }, [setAllaStatesForClosePopups, closePopupByEsc])
+
+  // function setEventListenerForDocument() {
+  //   document.removeEventListener('keydown', closePopupByEsc)
+  // }
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
-    setEventListenerForDocument()
+    //setEventListenerForDocument()
   }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
-    setEventListenerForDocument()
+    //setEventListenerForDocument()
   }
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true)
-    setEventListenerForDocument()
+   // setEventListenerForDocument()
   }
 
   function handleCardClick(cardData) {
     setSelectedCard(cardData)
     //setIsImagePopup(true)
-    setEventListenerForDocument()
+    //setEventListenerForDocument()
   }
 
   // function handleDeleteClick(cardId) {
@@ -121,41 +129,16 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
-         // onDelete={handleDeleteClick}
+        // onDelete={handleDeleteClick}
 
 
         />
         <Footer />
 
-        <PopupWithForm
-          name="popupFormEdit"
-          title="Редактировать профиль"
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <input
-            type="text"
-            className="popup__input popup__input_type_name"
-            placeholder="Имя"
-            id="profilename"
-            name="profilename"
-            minLength={2}
-            maxLength={40}
-            required=""
-          />
-          <span id="profilename-error" className="popup__error-visible" />
-          <input
-            type="text"
-            className="popup__input popup__input_type_status"
-            placeholder="О себе"
-            id="profilestatus"
-            name="profilestatus"
-            minLength={2}
-            maxLength={200}
-            required=""
-          />
-          <span id="profilestatus-error" className="popup__error-visible" />
-        </PopupWithForm>
+        />
 
         <PopupWithForm
           name="popupFormAdd"
@@ -210,7 +193,7 @@ function App() {
           buttonTitle="Да"
           isOpen={isDeletePopupOpen}
           onClose={closeAllPopups}
-          //onSubmit={handleDeleteSubmitButtonInPopup}
+        //onSubmit={handleDeleteSubmitButtonInPopup}
         >
         </PopupWithForm>
 
