@@ -7,18 +7,18 @@ import CurrentUserContext from "../../context/CurrentUserContext";
 export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext)
   //доработать сброс формы и красную линию при ошибке isInputValid reset
-  const {values, errors, isValid, handleChange, setValue } = useValidationForForm()
+  const { values, errors, isValid, handleChange, setValue } = useValidationForForm()
 
   useEffect(() => {
     setValue("profilename", currentUser.name)
     setValue("profilestatus", currentUser.about)
-  },[currentUser, setValue])
+  }, [currentUser, setValue])
 
   function handleSubmit(event) {
     event.preventDefault();
     onUpdateUser({
-    profilename: values.profilename, 
-    profilestatus: values.profilestatus
+      profilename: values.profilename,
+      profilestatus: values.profilestatus
     });
   }
 
@@ -43,9 +43,9 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         required=""
         onChange={handleChange}
         // values.profilename не катит тк прилетает undefaind
-        value = {values.profilename ? values.profilename : ''}
+        value={values.profilename ? values.profilename : ''}
       />
-      <span id="profilename-error" className="popup__error-visible">{errors.profilename}</span> 
+      <span id="profilename-error" className="popup__error-visible">{errors.profilename}</span>
       <input
         name="profilestatus"
         type="text"
@@ -54,12 +54,12 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         placeholder="О себе"
         id="profilestatus"
         minLength={2}
-        maxLength={200} 
+        maxLength={200}
         required=""
         onChange={handleChange}
-        value = {values.profilestatus ? values.profilestatus : ''}
+        value={values.profilestatus ? values.profilestatus : ''}
       />
-      <span id="profilestatus-error" className="popup__error-visible" >{errors.profilestatus}</span> 
+      <span id="profilestatus-error" className="popup__error-visible" >{errors.profilestatus}</span>
     </PopupWithForm>
   )
 }
