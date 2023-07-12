@@ -29,7 +29,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         placeholder="Название"
         minLength={2}
         maxLength={30}
-        required=""
+        required={true}
         value={values.namePlace ? values.namePlace : ''}
         onChange={handleChange}
       />
@@ -40,7 +40,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         name="link"
         id="link"
         placeholder="Ссылка на картинку"
-        required=""
+        required={true}
         value={values.link ? values.link : ''}
         onChange={handleChange}
       />

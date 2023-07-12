@@ -40,7 +40,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         id="profilename"
         minLength={2}
         maxLength={40}
-        required=""
+        required={true}
         onChange={handleChange}
         // values.profilename не катит тк прилетает undefaind
         value={values.profilename ? values.profilename : ''}
@@ -55,7 +55,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         id="profilestatus"
         minLength={2}
         maxLength={200}
-        required=""
+        required={true}
         onChange={handleChange}
         value={values.profilestatus ? values.profilestatus : ''}
       />
