@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useValidationForForm from "../../utils/useValidationForForm";
 import PopupWithForm from "../PopupWithForm/PopupWithForm"
 
@@ -5,11 +6,24 @@ import PopupWithForm from "../PopupWithForm/PopupWithForm"
 export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   //доработать сброс формы и красную линию при ошибке isInputValid reset
   const { values, errors, isValid, handleChange } = useValidationForForm()
+  // const [name, setName] = useState("");
+  // const [link, setLink] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
     onAddPlace({ namePlace: values.namePlace, link: values.link })
   }
+
+  //   useEffect(() => {
+  //     // очистка
+  // }, [//зависимости для срабатывания при открытии/закрытии
+  // ]);
+
+  useEffect(() => {
+    values.namePlace =''
+    values.link=''
+  }, [isOpen]);
+
 
   return (
     <PopupWithForm
