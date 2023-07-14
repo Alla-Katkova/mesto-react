@@ -7,12 +7,17 @@ import CurrentUserContext from "../../context/CurrentUserContext";
 export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext)
   //доработать сброс формы и красную линию при ошибке isInputValid reset
-  const { values, errors, isValid, handleChange, setValue } = useValidationForForm()
+  const { values, errors, isValid, handleChange, setValue, resetForm } = useValidationForForm()
 
   useEffect(() => {
     setValue("profilename", currentUser.name)
     setValue("profilestatus", currentUser.about)
   }, [currentUser, setValue])
+
+  function resetFormForClose() {
+    onClose()
+    resetForm({ profilename: currentUser.name, profilestatus: currentUser.about })
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -27,7 +32,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       name="popupFormEdit"
       title="Редактировать профиль"
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={resetFormForClose}
       isValid={isValid}
       onSubmit={handleSubmit}
     >

@@ -17,7 +17,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
-  //const [isImagePopup, setIsImagePopup] = useState(false)
+  const [isImagePopup, setIsImagePopup] = useState(false)
   const [selectedCard, setSelectedCard] = useState(null)
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false)
 
@@ -30,7 +30,7 @@ function App() {
     setIsEditProfilePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
     setIsAddPlacePopupOpen(false)
-    // setIsImagePopup(false)
+    setIsImagePopup(false)
     setSelectedCard(null)
     setIsDeletePopupOpen(false)
   }
@@ -78,7 +78,7 @@ function App() {
 
   function handleCardClick(cardData) {
     setSelectedCard(cardData)
-    //setIsImagePopup(true)
+    setIsImagePopup(true)
     //setEventListenerForDocument()
   }
 
@@ -111,22 +111,20 @@ function App() {
   }, []
   )
 
+
   function handleCardLike(card) {
     if (isLiked(card, currentUser)) {
       api.putDislike(card._id)
+        // Обновляем стейт
         .then(newCard => {
-          //console.log(response)
-          const newCards = cards.map((c) => c._id === card._id ? newCard : c);
-          // Обновляем стейт
-          setCards(newCards);
+          setCards((cardsOld) => cardsOld.map((c) => c._id === card._id ? newCard : c))
         })
         .catch((error) => console.error(`Ошибка при снятии лайка ${error}`))
     } else {
       api.putLike(card._id)
         .then(newCard => {
-          const newCards = cards.map((c) => c._id === card._id ? newCard : c);
           // Обновляем стейт
-          setCards(newCards);
+          setCards((cardsOld) => cardsOld.map((c) => c._id === card._id ? newCard : c))
         })
         .catch((error) => console.error(`Ошибка при добалении лайка ${error}`))
     }
@@ -182,7 +180,7 @@ function App() {
   }
 
   function handleAddPlaceSubmit(dataCard) {
-    console.log(dataCard)
+    //console.log(dataCard)
     api.addNewCardToServer(dataCard.namePlace, dataCard.link)
       .then(response => {
         setCards([response, ...cards])
@@ -209,6 +207,7 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
+
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
@@ -247,8 +246,9 @@ function App() {
 
         <ImagePopup
           cardData={selectedCard}
-          //isOpen={isImagePopup}
-          isOpen={handleCardClick}
+          isOpen={isImagePopup}
+          // isOpen={handleCardClick}
+          //selectedcard = true !setselectedcard false = null
           onClose={closeAllPopups}
         />
       </div>

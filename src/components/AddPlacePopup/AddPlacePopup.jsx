@@ -5,7 +5,7 @@ import PopupWithForm from "../PopupWithForm/PopupWithForm"
 
 export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   //доработать сброс формы и красную линию при ошибке isInputValid reset
-  const { values, errors, isValid, handleChange } = useValidationForForm()
+  const { values, errors, isValid, handleChange, resetForm } = useValidationForForm()
   // const [name, setName] = useState("");
   // const [link, setLink] = useState("");
 
@@ -16,12 +16,12 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
   //   useEffect(() => {
   //     // очистка
-  // }, [//зависимости для срабатывания при открытии/закрытии
-  // ]);
+  // }, [//зависимости для срабатывания при открытии/закрытии]);
 
   useEffect(() => {
-    values.namePlace =''
-    values.link=''
+    // values.namePlace =''
+    // values.link=''
+    resetForm()
   }, [isOpen]);
 
 

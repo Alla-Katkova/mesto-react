@@ -6,10 +6,8 @@ export default function useValidationForForm() {
   // const [isInputValid, setIsInputValid] = useState([])
   const [isValid, setIsValid] = useState(false)
 
-
   //console.log(isValid)
   function handleChange(event) {
-
     const name = event.target.name
     const value = event.target.value
     // const valid = event.target.validity.valid
@@ -38,12 +36,23 @@ export default function useValidationForForm() {
   //   setIsInputValid({})
   // }
   // если в useContext вставить просто функцию, то он будет рендерить бесконечно, исп useCallback
+
   const setValue = useCallback((name, value) => {
     setValues((oldValues) => {
       return { ...oldValues, [name]: value }
     })
   }, [])
 
+
+  //  возвращает все значения, кроме тех(dataold) что были переланы, если не было передано, то все обнуляется
+  function resetForm(dataOld = {}) {
+    setValues(dataOld);
+    setErrors({});
+    setIsValid(false);
+    // setIsValidInputs({});
+  }
+
+
   // добавить reset и isInputValid когда доработаю сброс и красную линию
-  return { values, errors, isValid, handleChange, setValue }
+  return { values, errors, isValid, handleChange, setValue, resetForm }
 }
