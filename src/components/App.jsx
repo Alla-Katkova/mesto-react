@@ -132,9 +132,9 @@ function App() {
   function handleCardDelete(card) {
     api.deleteCardFromDB(card._id)
       .then(newCard => {
-        const newCards = cards.filter((c) => c._id !== card._id && c)
-        // Обновляем стейт
-        setCards(newCards);
+        //const newCards = cards.filter((c) => c._id !== card._id && c)
+        setCards((cardsOld) => cardsOld.filter((c) => c._id !== card._id && c))
+        
       })
 
       .catch((error) => console.error(`Ошибка при удалении карточки ${error}`))
